@@ -14,10 +14,12 @@ import org.apache.http.HttpStatus;
 import com.grupoesfera.demo.integration.domain.Client;
 
 public class DefinicionDeSteps {
+
+	public static String url = "172.17.0.4";
 	
 	@Given("no existe el cliente {string}")
 	public void noExisteElCliente(String nombreCliente) {
-		Response respuesta =  get("http://localhost:8080/clients/v1.0/?name=" + nombreCliente);
+		Response respuesta =  get("http://"+url+":8080/clients/v1.0/?name=" + nombreCliente);
 		
 		if (respuesta.statusCode() == HttpStatus.SC_OK) {
 			Client cliente = respuesta.as(Client.class);
@@ -25,7 +27,7 @@ public class DefinicionDeSteps {
 			given()
 				.body(cliente)
 				.contentType(ContentType.JSON).
-			delete("http://localhost:8080/clients/v1.0").
+			delete("http://"+url+":8080/clients/v1.0").
 			then()
 				.statusCode(HttpStatus.SC_OK);
 		}
@@ -42,7 +44,7 @@ public class DefinicionDeSteps {
 			.body(cliente)
 			.contentType(ContentType.JSON).
 		when()
-			.post("http://localhost:8080/clients/v1.0").
+			.post("http://"+url+":8080/clients/v1.0").
 		then()
 			.statusCode(HttpStatus.SC_OK);	
 	}
@@ -50,7 +52,7 @@ public class DefinicionDeSteps {
 	@Then("el listado de clientes incluye a {string}")
 	public void elListadoDeClientesIncluyeA(String nombreCliente) {
 		when()
-			.get("http://localhost:8080/clients/v1.0/?name=" + nombreCliente).
+			.get("http://"+url+":8080/clients/v1.0/?name=" + nombreCliente).
 		then()
 			.statusCode(HttpStatus.SC_OK)
 			.assertThat().body(containsString(nombreCliente));
