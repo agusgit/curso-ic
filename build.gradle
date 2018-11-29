@@ -118,7 +118,7 @@ task buildImage(type: DockerBuildImage) {
 }
 // ===== End Docker
 
-def flywayServer = System.properties['flywayServer'] ?: '10.10.13.171'
+def flywayServer = System.properties['flywayServer'] ?: 'localhost'
 println "flywayServer[$flywayServer]"
 
 flyway {
