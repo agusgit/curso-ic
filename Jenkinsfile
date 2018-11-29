@@ -28,7 +28,7 @@ pipeline {
            }
            post{
                always{
-
+                    junit 'build/test-results/verify/*.xml'
                    println "ava se exportan los resultados de los test de aceptación"
                }
            }
